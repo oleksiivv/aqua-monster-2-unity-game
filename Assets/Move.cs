@@ -78,7 +78,7 @@ public class Move : MonoBehaviour
 
         if(PlayerPrefs.GetInt("first-Open",0)==1){
             this.RequestBanner();
-         }
+        }
          PlayerPrefs.SetInt("first-Open",1);
     }
 
@@ -133,6 +133,11 @@ public class Move : MonoBehaviour
             
             force=0;
             forceSlider.value=Mathf.Abs(force);
+        }
+
+        if(transform.position.y < -10){
+            Invoke("checkPos",0.1f);
+            death=true;
         }
         
     }
@@ -504,6 +509,9 @@ public class Move : MonoBehaviour
 
     private void RequestBanner()
     {
+        Debug.Log("Bannneeeer requested!!!!!!!!!!!!!!!!!!!!!");
+        if(Application.loadedLevel<2)return;
+
         // Clean up banner before reusing
         if (bannerAdView != null)
         {
@@ -511,7 +519,7 @@ public class Move : MonoBehaviour
         }
 
         // Create a 320x50 banner at top of the screen
-        bannerAdView = new Yodo1U3dBannerAdView(Yodo1U3dBannerAdSize.Banner, Yodo1U3dBannerAdPosition.BannerTop | Yodo1U3dBannerAdPosition.BannerHorizontalCenter);
+        bannerAdView = new Yodo1U3dBannerAdView(Yodo1U3dBannerAdSize.Banner, Yodo1U3dBannerAdPosition.BannerBottom | Yodo1U3dBannerAdPosition.BannerRight);
     }
 
     private void SetPrivacy(bool gdpr, bool coppa, bool ccpa)

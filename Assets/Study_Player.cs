@@ -8,7 +8,7 @@ public class Study_Player : MonoBehaviour
     private int force=0;
     public CameraMove camera;
     private int move=1;
-    public GameObject winPanel;
+    public GameObject winPanel, skipStudyBtn;
     public ParticleSystem[] particle;
 
     public CharAnimator anim;
@@ -62,6 +62,11 @@ public class Study_Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(winPanel.activeSelf){
+            skipStudyBtn.SetActive(false);
+            hideAllInfoPanels();
+            return;
+        }
         //Debug.Log(force);
         if(right){
             if(currStudyPanel==0){
@@ -90,7 +95,8 @@ public class Study_Player : MonoBehaviour
                 sliderFill.GetComponent<Image>().color=forceMinusSlider;
             }
         }
-        if(Input.GetMouseButtonUp(0) ){
+
+        if(Input.GetMouseButtonUp(0) && !winPanel.activeSelf){
             
             if(currStudyPanel==2){
                 rightPanel.SetActive(false);
@@ -127,7 +133,8 @@ public class Study_Player : MonoBehaviour
                     currStudyPanel++;
                 }
                 else if(currStudyPanel==11){
-                    infoPanel[4].SetActive(false);
+                    skipStudyBtn.SetActive(false);
+                    hideAllInfoPanels();
                     winPanel.SetActive(true);
                     if(!IsInvoking(nameof(finishStudy))){
                         Invoke(nameof(finishStudy),1f);
@@ -293,6 +300,15 @@ public class Study_Player : MonoBehaviour
                 move=0;
 
             }
+        }
+    }
+
+    void hideAllInfoPanels(){
+        rightPanel.SetActive(false);
+        leftPanel.SetActive(false);
+
+        foreach(var p in infoPanel){
+            p.SetActive(false);
         }
     }
 
