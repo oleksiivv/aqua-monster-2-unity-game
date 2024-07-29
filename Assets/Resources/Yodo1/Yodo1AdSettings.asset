@@ -21,8 +21,8 @@ MonoBehaviour:
     Channel: 
   iOSSettings:
     AppKey: 3ovlMu3kCZ
-    AdmobAppID: ca-app-pub-5580537606944457~2166718551
-    BundleID: 
+    AdmobAppID: ca-app-pub-5580537606944457~1353474530
+    BundleID: com.VertexStudio.AquaMonster2Castle
     ChinaRegion: 0
     GlobalRegion: 1
     AppLovinSdkKey: xcGD2fy-GdmiZQapx_kUSy5SMKyLoXBk8RyB5u9MVv34KetGdbl4XrXvAUFy0Qg9scKyVTI0NM4i_yzdXih4XE
