@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Yodo1.MAS;
-//using UnityEngine.Advertisements;
+
 public class MenuController : MonoBehaviour
 {
     public Text starsTotal;
@@ -18,6 +17,8 @@ public class MenuController : MonoBehaviour
     public int storyLen=3;
 
     public GameObject plane;
+
+    private AdmobController admob;
 
 
     /*
@@ -55,13 +56,7 @@ public class MenuController : MonoBehaviour
           PlayerPrefs.SetInt("storyShowed",-1);
         }
 
-        InitializeSdk();
-        SetPrivacy(true, false, false);
-        
-        InitializeInterstitialAds();
-
-        Yodo1U3dMas.SetInitializeDelegate((bool success, Yodo1U3dAdError error) => { });
-        Yodo1U3dMas.InitializeSdk();
+        admob = GetComponent<AdmobController>();
         
         // PlayerPrefs.SetInt("Completed0",1);
         // PlayerPrefs.SetInt("Completed1",1);
@@ -157,111 +152,17 @@ public class MenuController : MonoBehaviour
         }
     }
 
-
-    private Yodo1U3dBannerAdView bannerAdView;
-
-    private void RequestBanner()
-    {
-        // Clean up banner before reusing
-        if (bannerAdView != null)
-        {
-            bannerAdView.Destroy();
-        }
-
-        // Create a 320x50 banner at top of the screen
-        bannerAdView = new Yodo1U3dBannerAdView(Yodo1U3dBannerAdSize.Banner, Yodo1U3dBannerAdPosition.BannerTop | Yodo1U3dBannerAdPosition.BannerHorizontalCenter);
-    }
-
-    private void SetPrivacy(bool gdpr, bool coppa, bool ccpa)
-    {
-        Yodo1U3dMas.SetGDPR(gdpr);
-        Yodo1U3dMas.SetCOPPA(coppa);
-        Yodo1U3dMas.SetCCPA(ccpa);
-    }
-
-    private void InitializeSdk()
-    {
-        Yodo1U3dMas.InitializeSdk();
-    }
-
-    private void InitializeInterstitialAds()
-    {
-        Yodo1U3dMasCallback.Interstitial.OnAdOpenedEvent +=    
-        OnInterstitialAdOpenedEvent;
-        Yodo1U3dMasCallback.Interstitial.OnAdClosedEvent +=      
-        OnInterstitialAdClosedEvent;
-        Yodo1U3dMasCallback.Interstitial.OnAdErrorEvent +=      
-        OnInterstitialAdErorEvent;
-    }
-
-    private void OnInterstitialAdOpenedEvent()
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad opened");
-    }
-
-    private void OnInterstitialAdClosedEvent()
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad closed");
-    }
-
-    private void OnInterstitialAdErorEvent(Yodo1U3dAdError adError)
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad error - " + adError.ToString());
-    }
-
     public void show(){
-        if(Yodo1U3dMas.IsInterstitialAdLoaded()){
-            Yodo1U3dMas.ShowInterstitialAd();
-        }
-        // if(Advertisement.IsReady("video")){
-        //     Advertisement.Show("video");
-        // }
-        // else{
-        //     admob.showIntersitionalAd();
-        // }
+        admob.showIntersitionalAd();
     }
 
 
     public void ShowRewardedAd(){
       show();
+
       PlayerPrefs.SetInt("Coin",PlayerPrefs.GetInt("Coin")+5);
       money.text=PlayerPrefs.GetInt("Coin").ToString();
     }
-
-
-    /*
-    public void ShowRewardedAd()
-          {
-            if (Advertisement.IsReady())
-            {
-              var options = new ShowOptions { resultCallback = HandleShowResult };
-              Advertisement.Show("Rewarded_Android", options);
-            }
-          }
-
-          private void HandleShowResult(ShowResult result)
-          {
-            switch (result)
-            {
-              case ShowResult.Finished:
-              PlayerPrefs.SetInt("Coin",PlayerPrefs.GetInt("Coin")+5);
-              money.text=PlayerPrefs.GetInt("Coin").ToString();
-                Debug.Log("The ad was successfully shown.");
-                //
-                // YOUR CODE TO REWARD THE GAMER
-                // Give coins etc.
-                break;
-              case ShowResult.Skipped:
-                Debug.Log("The ad was skipped before reaching the end.");
-                break;
-              case ShowResult.Failed:
-                Debug.LogError("The ad failed to be shown.");
-                break;
-            }
-          }
-          */
-
-
     
     public GameObject secondPartLevels;
     public void nextLevelsPanel(){
@@ -294,10 +195,6 @@ public class MenuController : MonoBehaviour
     public void rateGame(){
       Application.OpenURL("https://play.google.com/store/apps/details?id=com.VertexStudioGame.Aqua");
     }
-
-
-
-
 
 
 }

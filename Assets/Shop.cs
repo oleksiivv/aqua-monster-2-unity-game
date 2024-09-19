@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Yodo1.MAS;
-//using UnityEngine.Advertisements;
 
 public class Shop : MonoBehaviour
 {
@@ -37,6 +35,8 @@ public class Shop : MonoBehaviour
 
     private string appId="4246483";
 
+    private AdmobController admob;
+
     void Start()
     {
         //Advertisement.Initialize(appId,false);
@@ -47,10 +47,6 @@ public class Shop : MonoBehaviour
         items.Add(new Item(3,60,"ExtraLife"));
         items.Add(new Item(4,80,"JetBoots"));
         items.Add(new Item(5,100,"JetPack"));
-
-
-
-
 
         //PlayerPrefs.SetInt("money",PlayerPrefs.GetInt("money")+3000);
         if (PlayerPrefs.GetInt("!sound") == 0)
@@ -65,13 +61,7 @@ public class Shop : MonoBehaviour
 
         updateItems();
 
-        InitializeSdk();
-        SetPrivacy(true, false, false);
-        
-        InitializeInterstitialAds();
-
-        Yodo1U3dMas.SetInitializeDelegate((bool success, Yodo1U3dAdError error) => { });
-        Yodo1U3dMas.InitializeSdk();
+        admob = GetComponent<AdmobController>();
     }
 
     void updateItems(){
@@ -109,69 +99,8 @@ public class Shop : MonoBehaviour
 
     }
 
-
-
-    private Yodo1U3dBannerAdView bannerAdView;
-
-    private void RequestBanner()
-    {
-        // Clean up banner before reusing
-        if (bannerAdView != null)
-        {
-            bannerAdView.Destroy();
-        }
-
-        // Create a 320x50 banner at top of the screen
-        bannerAdView = new Yodo1U3dBannerAdView(Yodo1U3dBannerAdSize.Banner, Yodo1U3dBannerAdPosition.BannerTop | Yodo1U3dBannerAdPosition.BannerHorizontalCenter);
-    }
-
-    private void SetPrivacy(bool gdpr, bool coppa, bool ccpa)
-    {
-        Yodo1U3dMas.SetGDPR(gdpr);
-        Yodo1U3dMas.SetCOPPA(coppa);
-        Yodo1U3dMas.SetCCPA(ccpa);
-    }
-
-    private void InitializeSdk()
-    {
-        Yodo1U3dMas.InitializeSdk();
-    }
-
-    private void InitializeInterstitialAds()
-    {
-        Yodo1U3dMasCallback.Interstitial.OnAdOpenedEvent +=    
-        OnInterstitialAdOpenedEvent;
-        Yodo1U3dMasCallback.Interstitial.OnAdClosedEvent +=      
-        OnInterstitialAdClosedEvent;
-        Yodo1U3dMasCallback.Interstitial.OnAdErrorEvent +=      
-        OnInterstitialAdErorEvent;
-    }
-
-    private void OnInterstitialAdOpenedEvent()
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad opened");
-    }
-
-    private void OnInterstitialAdClosedEvent()
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad closed");
-    }
-
-    private void OnInterstitialAdErorEvent(Yodo1U3dAdError adError)
-    {
-        Debug.Log("[Yodo1 Mas] Interstitial ad error - " + adError.ToString());
-    }
-
     public void show(){
-        if(Yodo1U3dMas.IsInterstitialAdLoaded()){
-            Yodo1U3dMas.ShowInterstitialAd();
-        }
-        // if(Advertisement.IsReady("video")){
-        //     Advertisement.Show("video");
-        // }
-        // else{
-        //     admob.showIntersitionalAd();
-        // }
+        admob.showIntersitionalAd();
     }
 
 
@@ -180,47 +109,6 @@ public class Shop : MonoBehaviour
       PlayerPrefs.SetInt("Coin",PlayerPrefs.GetInt("Coin")+5);
       money.text=PlayerPrefs.GetInt("Coin").ToString();
     }
-
-
-
-
-    /*
-
-
-    public void ShowRewardedAd()
-          {
-            if (Advertisement.IsReady())
-            {
-              var options = new ShowOptions { resultCallback = HandleShowResult };
-              Advertisement.Show("Rewarded_Android", options);
-            }
-          }
-
-          private void HandleShowResult(ShowResult result)
-          {
-            switch (result)
-            {
-              case ShowResult.Finished:
-              PlayerPrefs.SetInt("Coin",PlayerPrefs.GetInt("Coin")+5);
-              money.text=PlayerPrefs.GetInt("Coin").ToString();
-                Debug.Log("The ad was successfully shown.");
-                //
-                // YOUR CODE TO REWARD THE GAMER
-                // Give coins etc.
-                break;
-              case ShowResult.Skipped:
-                Debug.Log("The ad was skipped before reaching the end.");
-                break;
-              case ShowResult.Failed:
-                Debug.LogError("The ad failed to be shown.");
-                break;
-            }
-          }
-
-          */
-
-    
-
 }
 
 
