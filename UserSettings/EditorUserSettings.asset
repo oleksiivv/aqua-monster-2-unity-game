@@ -6,25 +6,43 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 0001075501515e585f0d5970127759441715492e7e7c27317e7e1863e1b06c3c
+      value: 565456545257505e085b097245750644434e4b28782d77692e701864b3e3376c
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 02540d0552070b58585a0d714670064410154f2e792973687c2a4837e4b7666e
+      value: 5b5751050157585858590a7216740c44134f4173797a7034297e1e30b4e56560
       flags: 0
     RecentlyUsedSceneGuid-2:
-      value: 5701575355005f0c0f58087a11745d44404e4b787b7c70362b784567e3b46468
+      value: 0502520755575c5f0b575e7712735a44424f412f797c7e317a794f62e3e3353e
       flags: 0
     RecentlyUsedSceneGuid-3:
-      value: 5255515204055d5a5b58547448720644414f1c287a2c27607d701831b5e5626f
+      value: 0705050206530d0f5c0d5c77497a084414161b2e797d74347b7c4e64e1b26d3b
       flags: 0
     RecentlyUsedSceneGuid-4:
-      value: 0705050206530d0f5c0d5c77497a084414161b2e797d74347b7c4e64e1b26d3b
+      value: 55010705500559080956592644270b444e16497d797d7f652f2b4b37b5b4643d
+      flags: 0
+    RecentlyUsedSceneGuid-5:
+      value: 015304535c055d5d540b597215760944154e4b79747d2268792a4932e4b0623d
+      flags: 0
+    RecentlyUsedSceneGuid-6:
+      value: 5b50030304570c03085d5f7b43220744104e1b2b2d7b2461792a4564b0e56669
+      flags: 0
+    RecentlyUsedSceneGuid-7:
+      value: 57060555000c085d585b0d7746270644154f412f7d7a2433787c1b30b5b7373c
+      flags: 0
+    RecentlyUsedSceneGuid-8:
+      value: 00030d02500650025c5a5b2615260c444e151a732a7a24677a2b1864b3b6376e
+      flags: 0
+    RecentlyUsedSceneGuid-9:
+      value: 5701575355005f0c0f58087a11745d44404e4b787b7c70362b784567e3b46468
       flags: 0
     RecentlyUsedScenePath-0:
       value: 22424703114646680e0b0227036c6c111b07142f1f2b233e2867083debf42d
       flags: 0
     RecentlyUsedScenePath-1:
       value: 22424703114646680e0b0227036c6c151518162e7966333e243d04
+      flags: 0
+    lightmappingBakingProfile:
+      value: 51
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
@@ -43,4 +61,6 @@ EditorUserSettings:
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
   m_VCAllowAsyncUpdate: 0
+  m_VCScanLocalPackagesOnConnect: 1
   m_ArtifactGarbageCollection: 1
+  m_CompressAssetsOnImport: 1

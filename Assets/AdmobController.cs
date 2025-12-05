@@ -21,6 +21,8 @@ public class AdmobController : MonoBehaviour
 
     public static int adsCounter=0;
 
+    public IAPManager iap;
+
     //public UnityAdsController unityAds;
 
     void Awake(){
@@ -31,10 +33,10 @@ public class AdmobController : MonoBehaviour
 
         MobileAds.Initialize(initStatus => {
             LoadLoadInterstitialAd();
-            CreateBannerView();
+            //CreateBannerView();
 
             if(PlayerPrefs.GetInt("first-Open",0)==1){
-                LoadBannerAd();
+                //LoadBannerAd();
              }
         });
 
@@ -91,10 +93,17 @@ public class AdmobController : MonoBehaviour
 
 
       public bool showIntersitionalUnityAd(){
+        if (! iap.canShowAds())
+        {
+            return true;
+        }
+
         if (_interstitialAd != null && _interstitialAd.CanShowAd())
         {
             Debug.Log("Showing interstitial ad.");
             _interstitialAd.Show();
+
+            Invoke(nameof(proposeIap), 0.5f);
 
             return true;
         }
@@ -117,11 +126,17 @@ public class AdmobController : MonoBehaviour
         // Create a 320x50 banner at top of the screen
         _bannerView = new BannerView(bannerId, AdSize.Banner, AdPosition.Bottom);
     }
+    
+    void proposeIap(){
+        if(PlayerPrefs.GetInt("no_ads_purchased", 0) == 0){
+            iap.ShowPanel();
+        }
+    }
 
     public void LoadBannerAd()
     {
         // create an instance of a banner view first.
-        if(_bannerView == null)
+        if (_bannerView == null)
         {
             CreateBannerView();
         }

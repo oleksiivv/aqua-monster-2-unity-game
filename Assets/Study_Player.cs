@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Sentry;
 
 public class Study_Player : MonoBehaviour
 {
@@ -53,7 +54,7 @@ public class Study_Player : MonoBehaviour
 
         rightPanel.SetActive(true);
 
-
+        SentrySdk.CaptureMessage("Started study");
         
     }
 
@@ -200,9 +201,11 @@ public class Study_Player : MonoBehaviour
             
 
         }
-        if(other.gameObject.tag=="Finish"){
+        if (other.gameObject.tag == "Finish")
+        {
 
             winPanel.SetActive(true);
+            SentrySdk.CaptureMessage("Completed study");
 
         }
         if(other.gameObject.tag!="Death" && other.gameObject.tag!="Finish"){
@@ -311,9 +314,12 @@ public class Study_Player : MonoBehaviour
 
 
 
-    public void finishStudy(){
-        PlayerPrefs.SetInt("studied",1);
+    public void finishStudy()
+    {
+        PlayerPrefs.SetInt("studied", 1);
         StartCoroutine(loadAsync(0));
+        
+        SentrySdk.CaptureMessage("Skipped study");
     }
 
 

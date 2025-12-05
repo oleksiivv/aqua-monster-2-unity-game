@@ -20,8 +20,11 @@ public class ChooseItem : MonoBehaviour
      public Move player;
 
      public GameObject up;
+     
+    public Study_Player studyPlayer;
 
-     public static int fallForce=-20;
+
+     public static int fallForce = -20;
 
 
     void Start(){
@@ -45,71 +48,154 @@ public class ChooseItem : MonoBehaviour
     }
 
 
-    public void choose(int current){
-        
-        if(items.items[current].getCount()>0 && choosen[current].activeSelf==false){
-            foreach(var ch in choosen)ch.SetActive(false);
+    public void choose(int current)
+    {
+        if (items.items[current].getCount() > 0 && choosen[current].activeSelf == false)
+        {
+            if (player != null)
+            {
+                ChooseForPlayer(current);
+            }
+            else if (studyPlayer != null)
+            {
+                ChooseForStudyPlayer(current);
+            }
+        }
+    }
+
+    private void ChooseForPlayer(int current)
+    {
+
+        if (items.items[current].getCount() > 0 && choosen[current].activeSelf == false)
+        {
+            foreach (var ch in choosen) ch.SetActive(false);
             choosen[current].SetActive(true);
-            PlayerPrefs.SetInt(items.items[current].Name,items.items[current].getCount()-1);
+            PlayerPrefs.SetInt(items.items[current].Name, items.items[current].getCount() - 1);
             items.updateItems();
 
 
-            switch(current){
+            switch (current)
+            {
                 case 0://magnet
-                magnet.SetActive(true);
-                foreach(var star in stars){
+                    magnet.SetActive(true);
+                    foreach (var star in stars)
+                    {
 
-                    star.GetComponent<BoxCollider>().size*=5;
+                        star.GetComponent<BoxCollider>().size *= 5;
 
-                }
-                break;
+                    }
+                    break;
 
                 case 1://acceleration
 
-                player.gameObject.GetComponent<Rigidbody>().freezeRotation=false;
-                player.anim.jump();
-                player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.right*-1*100*5*Time.timeScale);
-                player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up*Mathf.Abs(100)*5*Time.timeScale);
+                    player.gameObject.GetComponent<Rigidbody>().freezeRotation = false;
+                    player.anim.jump();
+                    player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.right * -1 * 100 * 5 * Time.timeScale);
+                    player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * Mathf.Abs(100) * 5 * Time.timeScale);
 
 
 
 
-                break;
+                    break;
 
                 case 2://extralife
-                if(player.gameObject.transform.position.y<2){
-                  player.extraLife=true;
-                }
-                break;
+                    if (player.gameObject.transform.position.y < 2)
+                    {
+                        player.extraLife = true;
+                    }
+                    break;
 
                 case 3://jetboots
-                if(player.transform.position.y>1.7f){
-                    player.transform.position=new Vector3(player.transform.position.x,1.6f,player.transform.position.z);
-                }
-                up.transform.position=new Vector3(up.transform.position.x,2f,up.transform.position.z);
-                fallForce=-50;
-                player.gameObject.GetComponent<Rigidbody>().useGravity=false;
-                player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up*30);
-                Invoke("stopJetBoots",10.5f);
-                jetBootL.SetActive(true);
-                jetBootR.SetActive(true);
-                break;
+                    if (player.transform.position.y > 1.7f)
+                    {
+                        player.transform.position = new Vector3(player.transform.position.x, 1.6f, player.transform.position.z);
+                    }
+                    up.transform.position = new Vector3(up.transform.position.x, 2f, up.transform.position.z);
+                    fallForce = -50;
+                    player.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 30);
+                    Invoke("stopJetBoots", 10.5f);
+                    jetBootL.SetActive(true);
+                    jetBootR.SetActive(true);
+                    break;
 
                 case 4://jetpack
-                if(player.transform.position.y>1.7f){
-                    player.transform.position=new Vector3(player.transform.position.x,1.6f,player.transform.position.z);
-                }
-                up.transform.position=new Vector3(up.transform.position.x,2f,up.transform.position.z);
-                fallForce=-50;
-                player.gameObject.GetComponent<Rigidbody>().useGravity=false;
-                player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up*30);
-                Invoke("stopJetpack",10.5f);
-                jetPack.SetActive(true);
-                break;
+                    if (player.transform.position.y > 1.7f)
+                    {
+                        player.transform.position = new Vector3(player.transform.position.x, 1.6f, player.transform.position.z);
+                    }
+                    up.transform.position = new Vector3(up.transform.position.x, 2f, up.transform.position.z);
+                    fallForce = -50;
+                    player.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    player.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 30);
+                    Invoke("stopJetpack", 10.5f);
+                    jetPack.SetActive(true);
+                    break;
             }
         }
 
     }
+
+    private void ChooseForStudyPlayer(int current)
+    {
+        foreach (var ch in choosen) ch.SetActive(false);
+        choosen[current].SetActive(true);
+        PlayerPrefs.SetInt(items.items[current].Name, items.items[current].getCount() - 1);
+        items.updateItems();
+
+        switch (current)
+        {
+            case 0: // magnet
+                magnet.SetActive(true);
+                foreach (var star in stars)
+                {
+                    star.GetComponent<BoxCollider>().size *= 5;
+                }
+                break;
+
+            case 1: // acceleration
+                studyPlayer.gameObject.GetComponent<Rigidbody>().freezeRotation = false;
+                studyPlayer.anim.jump();
+                studyPlayer.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.right * -1 * 100 * 5 * Time.timeScale);
+                studyPlayer.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * Mathf.Abs(100) * 5 * Time.timeScale);
+                break;
+
+            case 2: // extralife
+                if (studyPlayer.gameObject.transform.position.y < 2)
+                {
+                    studyPlayer.extraLife = true;
+                }
+                break;
+
+            case 3: // jetboots
+                if (studyPlayer.transform.position.y > 1.7f)
+                {
+                    studyPlayer.transform.position = new Vector3(studyPlayer.transform.position.x, 1.6f, studyPlayer.transform.position.z);
+                }
+                up.transform.position = new Vector3(up.transform.position.x, 2f, up.transform.position.z);
+                fallForce = -50;
+                studyPlayer.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                studyPlayer.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 30);
+                Invoke("stopJetBootsStudy", 10.5f);
+                jetBootL.SetActive(true);
+                jetBootR.SetActive(true);
+                break;
+
+            case 4: // jetpack
+                if (studyPlayer.transform.position.y > 1.7f)
+                {
+                    studyPlayer.transform.position = new Vector3(studyPlayer.transform.position.x, 1.6f, studyPlayer.transform.position.z);
+                }
+                up.transform.position = new Vector3(up.transform.position.x, 2f, up.transform.position.z);
+                fallForce = -50;
+                studyPlayer.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                studyPlayer.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * 30);
+                Invoke("stopJetpackStudy", 10.5f);
+                jetPack.SetActive(true);
+                break;
+        }
+    }
+
 
     void stopJetBoots(){
         jetBootL.SetActive(false);

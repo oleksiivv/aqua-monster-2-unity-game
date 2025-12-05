@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Sentry;
 
 [RequireComponent(typeof(AdmobController))]
 public class Move : MonoBehaviour
@@ -53,12 +54,17 @@ public class Move : MonoBehaviour
         anim.idle();
         Time.timeScale=1;
         camera.player=gameObject;
-        if(PlayerPrefs.GetInt("Completed"+Application.loadedLevel.ToString())==1){
+        if (PlayerPrefs.GetInt("Completed" + Application.loadedLevel.ToString()) == 1)
+        {
             best.gameObject.SetActive(true);
-            best.text=PlayerPrefs.GetInt("bestIn"+Application.loadedLevel.ToString())+" s";
+            best.text = PlayerPrefs.GetInt("bestIn" + Application.loadedLevel.ToString()) + " s";
+
+            SentrySdk.CaptureMessage("Reopened level #" + Application.loadedLevel.ToString());
         }
-        else{
+        else
+        {
             best.gameObject.SetActive(false);
+            SentrySdk.CaptureMessage("Opened level #"+Application.loadedLevel.ToString());
         }
 
         StartCoroutine(scoreInc());
@@ -182,12 +188,14 @@ public class Move : MonoBehaviour
             particle[0].Play();
 
             winPanel.SetActive(true);
+            SentrySdk.CaptureMessage("Completed level #"+Application.loadedLevel.ToString());
             
             
 
-            if(lastLevel){
-                PlayerPrefs.SetInt("win",1);
-                move=0;
+            if (lastLevel)
+            {
+                PlayerPrefs.SetInt("win", 1);
+                move = 0;
                 stars.hideStars();
                 return;
             }
